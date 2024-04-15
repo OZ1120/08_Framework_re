@@ -1,10 +1,15 @@
 package com.lej.practice.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.lej.practice.model.dto.MemberDTO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -110,5 +115,43 @@ public class ParameterController {
 		
 		return "redirect:/param/main";
 	}
+
+	
+	/* 4. @ModelAttribute를 이용한 파라미터 얻어오기 */
+
+	
+	// @ModelAttribute
+	
+	// - DTO(또는 VO)와 같이 사용하는 어노테이션
+	
+	// - 전달 받은 파라미터의 name 속성 값이
+	//   같이 사용되는 DTO의 필드명과 같다면
+	//   자동으로 setter를 호출해서 필드에 값을 세팅
+	
+	// *** @ModelAttribute 사용 시 주의사항 ***
+	// - DTO에 기본 생성자가 필수로 존재해야 한다!
+	// - DTO에 setter가 필수로 존재해야 한다!
+	
+	// *** @ModelAttribute 어노테이션은 생략이 가능하다! ***
+	
+	// *** @ModelAttribute를 이용해 값이 필드에 세팅된 객체를
+	//		"커맨드 객체" 라고 한다 ***
+	
+	@PostMapping("test4")
+	public String paramTest4(/* @ModelAttribute */ MemberDTO inputMember) {
+													// -> 커맨드 객체
+		// lombok 테스트
+		MemberDTO mem = new MemberDTO();
+		
+		mem.getMemberAge(); // getter
+		mem.setMemberAge(0); // setter
+		// 안만들었는데 호출 가능!!
+		
+		log.debug("inputMember :" + inputMember.toString());
+		
+		return "redirect:/param/main";
+	}
+	
+	
 
 }
